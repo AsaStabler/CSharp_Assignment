@@ -11,4 +11,8 @@
     <ProjectReference Include="..\Business\Business.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Dialogues\" />
+  </ItemGroup>
+
 </Project>
