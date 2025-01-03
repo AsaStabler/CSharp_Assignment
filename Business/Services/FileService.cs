@@ -31,7 +31,8 @@ public class FileService : IFileService
         
             File.WriteAllText(_filePath, content);
             return true;
-        } catch (Exception ex) 
+        } 
+        catch (Exception ex) 
         {
             Debug.WriteLine(ex.Message);
             return false; 

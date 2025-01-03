@@ -1,10 +1,9 @@
 ﻿using Business.Models;
 
-namespace Business.Interfaces
+namespace Business.Interfaces;
+
+public interface IContactRepository
 {
-    public interface IContactRepository
-    {
-        List<Contact>? GetContacts();
-        bool SaveContacts(List<Contact> contacts);
-    }
+    List<Contact>? GetContacts();
+    bool SaveContacts(List<Contact> contacts);
 }
