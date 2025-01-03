@@ -1,16 +1,34 @@
 ﻿using Business.Helpers;
 using Business.Interfaces;
 using Business.Models;
+using Business.Repositories;
 using System.Diagnostics;
 using System.Text.Json;
 
 namespace Business.Services;
 
-public class ContactService(IContactRepository contactRepository) : IContactService
+//BEFORE implemented reading in the list in constructor (at start of application)
+//public class ContactService(IContactRepository contactRepository) : IContactService
+public class ContactService : IContactService
 {
+    //Before ContactRepository was implemented:
     //private readonly IFileService _fileService = fileService;
-    private readonly IContactRepository _contactRepository = contactRepository;
-    private List<Contact> _contacts = [];
+
+    //BEFORE implemented reading in the list in constructor (at start of application)
+    //private readonly IContactRepository _contactRepository = contactRepository;
+    //private List<Contact> _contacts = [];
+
+    private readonly IContactRepository _contactRepository;
+    private List<Contact> _contacts;
+
+    //Constructor, where list of contacts is populated from contactlist.json (at start of application)
+    public ContactService(IContactRepository contactRepository)
+    {
+        _contactRepository = contactRepository;
+
+        // ??? Should I handle try - catch here? Or will it be handled in the ContactRepository?
+        _contacts = _contactRepository.GetContacts()!;
+    }
 
     public bool CreateContact(Contact contact)
     {
@@ -20,6 +38,7 @@ public class ContactService(IContactRepository contactRepository) : IContactServ
 
             _contacts.Add(contact);
 
+            //Before ContactRepository was implemented:
             //var json = JsonSerializer.Serialize(contact);
             //_fileService.SaveContentToFile(json);
             //return true;
