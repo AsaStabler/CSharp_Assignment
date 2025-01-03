@@ -24,12 +24,16 @@ public class MenuDialog(IContactService contactService)
         while (true)
         {
             Console.Clear();
-            Console.WriteLine("-------- MAIN MENU --------");
-            Console.WriteLine("1.  Add New Contact");
-            Console.WriteLine("2.  View All Contacts");
-            Console.WriteLine("Q.  Exit Application");
-            Console.WriteLine("---------------------------");
-            Console.Write("Enter option: ");
+            Console.WriteLine("");
+            Console.WriteLine(" -------- MAIN MENU --------");
+            Console.WriteLine("");
+            Console.WriteLine(" 1.  Add New Contact");
+            Console.WriteLine(" 2.  View All Contacts");
+            Console.WriteLine(" Q.  Exit Application");
+            Console.WriteLine("");
+            Console.WriteLine(" ---------------------------");
+            Console.WriteLine("");
+            Console.Write(" Enter option: ");
 
             var option = Console.ReadLine()!;
 
@@ -45,12 +49,12 @@ public class MenuDialog(IContactService contactService)
 
                 case "q":
                     Console.Clear();
-                    OutputDialog("Press any key to exit application");
+                    OutputDialog(" Press any key to exit application");
                     //isRunning = false;
                     break;
 
                 default:
-                    OutputDialog("Invalid option. Please try again.");
+                    OutputDialog(" Invalid option. Please try again.");
                     break;
             }
         }
@@ -61,15 +65,38 @@ public class MenuDialog(IContactService contactService)
         var contact = ContactFactory.Create();
 
         Console.Clear();
-        Console.WriteLine("-------- ADD NEW CONTACT --------");
-        Console.Write("Enter Name: ");
-        contact.Name = Console.ReadLine()!;
+        Console.WriteLine("");
+        Console.WriteLine(" -------- ADD NEW CONTACT --------");
+        Console.WriteLine("");
+
+        Console.Write(" Enter First Name: ");
+        contact.FirstName = Console.ReadLine()!;
+
+        Console.Write(" Enter Last Name: ");
+        contact.LastName = Console.ReadLine()!;
+
+        Console.Write(" Enter Email: ");
+        contact.Email = Console.ReadLine()!;
+
+        Console.Write(" Enter Phone number: ");
+        contact.Phone = Console.ReadLine()!;
+
+        Console.Write(" Enter Street address: ");
+        contact.StreetAddress = Console.ReadLine()!;
+
+        Console.Write(" Enter Postal code: ");
+        contact.PostalCode = Console.ReadLine()!;
+
+        Console.Write(" Enter City: ");
+        contact.City = Console.ReadLine()!;
+
+        Console.WriteLine("");
 
         var result = _contactService.CreateContact(contact);
         if (result)
-            Console.WriteLine("Contact was created successfully.");
+            Console.WriteLine(" Contact was created successfully.");
         else
-            Console.WriteLine("Unable to create new contact.");
+            Console.WriteLine(" Unable to create new contact.");
 
         Console.ReadKey();
     }
@@ -77,10 +104,18 @@ public class MenuDialog(IContactService contactService)
     public void ViewAllContacts()
     {
         Console.Clear();
-        Console.WriteLine("-------- VIEW ALL CONTACTS --------");
+        Console.WriteLine("");
+        Console.WriteLine(" -------- VIEW ALL CONTACTS --------");
+        Console.WriteLine("");
 
         foreach (var contact in _contactService.GetAllContacts())
-             Console.WriteLine($"{contact.Name} ({contact.Id})");
+        { 
+            Console.WriteLine($" Name:    {contact.FirstName} {contact.LastName}  ({contact.Id})");
+            Console.WriteLine($" Email:   {contact.Email}");
+            Console.WriteLine($" Phone:   {contact.Phone}");
+            Console.WriteLine($" Address: {contact.StreetAddress}, {contact.PostalCode} {contact.City}");
+            Console.WriteLine("");
+        }
 
         Console.ReadKey();
     }
