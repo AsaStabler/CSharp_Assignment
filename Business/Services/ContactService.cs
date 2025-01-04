@@ -76,4 +76,35 @@ public class ContactService : IContactService
         }
     }
     */
+
+    /* TO DO: Snygga till hantering av successmeddelanden och errormeddelanden */
+    public Contact? GetContactById(string id)
+    {
+        //Not necessary to read in to _contacts - file is read at startup of application
+        Contact contact = _contacts.FirstOrDefault(x => x.Id == id)!;
+        //if (contact != null)
+            return contact;
+
+        //throw new KeyNotFoundException($"Contact with id {id} was not found.");
+    }
+
+    /* TO DO: Snygga till hantering av successmeddelanden och errormeddelanden */
+    public bool DeleteContact(Contact contact)
+    {
+        //Not necessary to read in to _contacts - file is read at startup of application
+        
+        //Remove contact from the list of contacts, i.e. _contacts
+        var result = _contacts.Remove(contact);
+
+        //Save the updated list to file
+        if (result)
+        { 
+            result = _contactRepository.SaveContacts(_contacts);
+            return result;
+        }
+        return false;
+    }
+
+
+
 }

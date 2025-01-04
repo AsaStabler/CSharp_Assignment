@@ -40,6 +40,4 @@ public class ContactRepository(IFileService fileService) : IContactRepository
             return [];
         }
     }
-
-
 }
