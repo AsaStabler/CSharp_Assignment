@@ -14,29 +14,36 @@ public class FileService : IFileService
         _filePath = Path.Combine(_directoryPath, fileName);
     }
 
-    public string GetContentFromFile()
-    {
-        if (File.Exists(_filePath)) 
-            return File.ReadAllText(_filePath);
-
-        return null!;
-    }
-
     public bool SaveContentToFile(string content)
     {
-        try 
-        { 
-            if (!Directory.Exists(_directoryPath)) 
-                Directory.CreateDirectory(_directoryPath);   
-        
+        try
+        {
+            if (!Directory.Exists(_directoryPath))
+                Directory.CreateDirectory(_directoryPath);
+
             File.WriteAllText(_filePath, content);
             return true;
-        } 
-        catch (Exception ex) 
+        }
+        catch (Exception ex)
         {
             Debug.WriteLine(ex.Message);
-            return false; 
-        }   
+            return false;
+        }
+    }
+
+    public string GetContentFromFile()
+    {
+        try
+        { 
+            if (File.Exists(_filePath)) 
+                return File.ReadAllText(_filePath);
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine(ex.Message);
+            return null!;
+        }
+        return null!;
     }
 }
 

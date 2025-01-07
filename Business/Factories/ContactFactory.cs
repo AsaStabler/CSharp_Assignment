@@ -1,9 +1,19 @@
 ﻿using Business.Models;
 
-namespace Business.Factories
+namespace Business.Factories;
+
+public static class ContactFactory
 {
-    public static class ContactFactory
+    public static ContactRegistrationForm Create() => new();
+
+    public static Contact Create(ContactRegistrationForm contactRegistrationForm) => new()
     {
-        public static Contact Create() => new();
-    }
+        FirstName = contactRegistrationForm.FirstName,
+        LastName = contactRegistrationForm.LastName,
+        Email = contactRegistrationForm.Email,
+        Phone = contactRegistrationForm.Phone,
+        StreetAddress = contactRegistrationForm.StreetAddress,
+        PostalCode = contactRegistrationForm.PostalCode,    
+        City = contactRegistrationForm.City
+    }; 
 }

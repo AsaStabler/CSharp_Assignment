@@ -73,7 +73,7 @@ public class MenuDialog(IContactService contactService)
 
     public void AddNewContact()
     {
-        var contact = ContactFactory.Create();
+        var contactRegistrationForm = ContactFactory.Create();
 
         Console.Clear();
         Console.WriteLine("");
@@ -81,29 +81,29 @@ public class MenuDialog(IContactService contactService)
         Console.WriteLine("");
 
         Console.Write(" Enter First Name: ");
-        contact.FirstName = Console.ReadLine()!;
+        contactRegistrationForm.FirstName = Console.ReadLine()!;
 
         Console.Write(" Enter Last Name: ");
-        contact.LastName = Console.ReadLine()!;
+        contactRegistrationForm.LastName = Console.ReadLine()!;
 
         Console.Write(" Enter Email: ");
-        contact.Email = Console.ReadLine()!;
+        contactRegistrationForm.Email = Console.ReadLine()!;
 
         Console.Write(" Enter Phone number: ");
-        contact.Phone = Console.ReadLine()!;
+        contactRegistrationForm.Phone = Console.ReadLine()!;
 
         Console.Write(" Enter Street address: ");
-        contact.StreetAddress = Console.ReadLine()!;
+        contactRegistrationForm.StreetAddress = Console.ReadLine()!;
 
         Console.Write(" Enter Postal code: ");
-        contact.PostalCode = Console.ReadLine()!;
+        contactRegistrationForm.PostalCode = Console.ReadLine()!;
 
         Console.Write(" Enter City: ");
-        contact.City = Console.ReadLine()!;
+        contactRegistrationForm.City = Console.ReadLine()!;
 
         Console.WriteLine("");
 
-        var result = _contactService.CreateContact(contact);
+        var result = _contactService.CreateContact(contactRegistrationForm);
         if (result)
             Console.WriteLine(" Contact was created successfully.");
         else
@@ -120,13 +120,8 @@ public class MenuDialog(IContactService contactService)
         Console.WriteLine("");
 
         foreach (var contact in _contactService.GetAllContacts())
-        { 
-            /*** TO DO: Flytta till en hjälpmetod ***/
-            Console.WriteLine($" Name:    {contact.FirstName} {contact.LastName}  ({contact.Id})");
-            Console.WriteLine($" Email:   {contact.Email}");
-            Console.WriteLine($" Phone:   {contact.Phone}");
-            Console.WriteLine($" Address: {contact.StreetAddress}, {contact.PostalCode} {contact.City}");
-            Console.WriteLine("");
+        {
+            ShowContact(contact);
         }
 
         Console.ReadKey();
@@ -147,16 +142,10 @@ public class MenuDialog(IContactService contactService)
 
         if (contact != null)
         {
-            /*** TO DO: Flytta till en hjälpmetod ***/
-            Console.WriteLine($" Name:    {contact.FirstName} {contact.LastName}  ({contact.Id})");
-            Console.WriteLine($" Email:   {contact.Email}");
-            Console.WriteLine($" Phone:   {contact.Phone}");
-            Console.WriteLine($" Address: {contact.StreetAddress}, {contact.PostalCode} {contact.City}");
-            Console.WriteLine("");
+            ShowContact(contact);
         }
         else
-            Console.WriteLine($" " +
-                $" No contact with id: ({Id}) could be found.");
+            Console.WriteLine($" No contact with id: ({Id}) could be found.");
 
         Console.ReadKey();
     }
@@ -193,6 +182,15 @@ public class MenuDialog(IContactService contactService)
     {
         Console.WriteLine(message);
         Console.ReadKey();
+    }
+
+    public void ShowContact(Contact contact)
+    {
+        Console.WriteLine($" Name:    {contact.FirstName} {contact.LastName}  ({contact.Id})");
+        Console.WriteLine($" Email:   {contact.Email}");
+        Console.WriteLine($" Phone:   {contact.Phone}");
+        Console.WriteLine($" Address: {contact.StreetAddress}, {contact.PostalCode} {contact.City}");
+        Console.WriteLine("");
     }
 
 }
