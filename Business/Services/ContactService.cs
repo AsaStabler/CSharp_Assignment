@@ -1,5 +1,5 @@
-﻿using Business.Factories;
-using Business.Helpers;
+﻿using Business.Dtos;
+using Business.Factories;
 using Business.Interfaces;
 using Business.Models;
 using System.Diagnostics;
@@ -11,7 +11,7 @@ public class ContactService : IContactService
     private readonly IContactRepository _contactRepository;
     private List<Contact> _contacts = [];
 
-    //Constructor, where list of contacts is populated from contactlist.json (at start of application)
+    //Constructor, where list of contacts is populated from contactlist.json (at startup of application)
     public ContactService(IContactRepository contactRepository)
     {
         _contactRepository = contactRepository;
@@ -20,26 +20,13 @@ public class ContactService : IContactService
         _contacts = _contactRepository.GetContacts()!;
     }
 
-    public bool AddContactToList(Contact contact)
-    {
-        try
-        {
-            _contacts.Add(contact);
-            return true;
-        }
-        catch { return false; }
-    }
-
     public bool CreateContact(ContactRegistrationForm contactRegistrationForm)
     {
         try
         {
-            /*** Varför ´var contact´ istället för ´Contact contact´ här ***/
             var contact = ContactFactory.Create(contactRegistrationForm);
-            contact.Id = IdGenerator.GenerateUniqueId();
 
-            //_contacts.Add(contact);
-            AddContactToList(contact);  //???
+            _contacts.Add(contact);
 
             var result = _contactRepository.SaveContacts(_contacts);
             return result;

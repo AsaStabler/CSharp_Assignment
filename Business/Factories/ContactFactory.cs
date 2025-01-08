@@ -1,4 +1,6 @@
-﻿using Business.Models;
+﻿using Business.Dtos;
+using Business.Helpers;
+using Business.Models;
 
 namespace Business.Factories;
 
@@ -8,6 +10,7 @@ public static class ContactFactory
 
     public static Contact Create(ContactRegistrationForm contactRegistrationForm) => new()
     {
+        Id = IdGenerator.GenerateUniqueId(),
         FirstName = contactRegistrationForm.FirstName,
         LastName = contactRegistrationForm.LastName,
         Email = contactRegistrationForm.Email,

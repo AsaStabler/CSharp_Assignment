@@ -5,10 +5,6 @@ using Business.Services;
 using Microsoft.Extensions.DependencyInjection;
 using PresentationConsoleMainApp.Dialogs;
 
-
-//var dialog = new MenuDialog();
-//dialog.ShowMenu();
-
 var ServiceProvider = new ServiceCollection()
     .AddSingleton<IFileService>(new FileService("Data", "contactlist.json"))
     .AddSingleton<IContactRepository, ContactRepository>()

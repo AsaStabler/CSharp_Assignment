@@ -1,4 +1,5 @@
-﻿using Business.Factories;
+﻿using Business.Dtos;
+using Business.Factories;
 using Business.Models;
 
 namespace Business.Test.Factories;
@@ -8,13 +9,13 @@ public class ContactFactory_Tests
     [Fact]
     public void Create_ShouldReturnContactRegistrationForm()
     {
-        //arrange
+        // Arrange
         ContactRegistrationForm contactRegistrationForm = new();
 
-        //act
+        // Act
         ContactRegistrationForm result = ContactFactory.Create();
 
-        //assert
+        // Assert
         Assert.NotNull(result);
         Assert.IsType<ContactRegistrationForm>(result);
     }
@@ -27,14 +28,14 @@ public class ContactFactory_Tests
     [InlineData("Karin", "Wallin")]
     public void Create_ShouldReturnContact_WhenContactRegistrationFormIsSupplied(string firstName, string lastName)
     {
-        //arrange
+        // Arrange
         //ContactRegistrationForm contactRegistrationForm = new() { FirstName = "Karin", LastName = "Wallin" };
         ContactRegistrationForm contactRegistrationForm = new() { FirstName = firstName, LastName = lastName };
 
-        //act
+        // Act
         Contact result = ContactFactory.Create(contactRegistrationForm);
 
-        //assert
+        // Assert
         Assert.NotNull(result);
         Assert.IsType<Contact>(result);
         Assert.Equal(contactRegistrationForm.FirstName, result.FirstName);
