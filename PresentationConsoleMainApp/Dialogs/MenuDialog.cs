@@ -1,16 +1,12 @@
 ﻿using Business.Factories;
 using Business.Interfaces;
 using Business.Models;
-using Business.Services;
-using System.Net.Http.Headers;
 
 namespace PresentationConsoleMainApp.Dialogs;
 
 public class MenuDialog(IContactService contactService)
-//public class MenuDialog()
 {
     private readonly IContactService _contactService = contactService;
-    //private readonly IContactService _contactService = new();
 
     public void ShowMenu()
     {

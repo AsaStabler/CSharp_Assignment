@@ -19,7 +19,7 @@ public class ContactFactory_Tests
         Assert.IsType<ContactRegistrationForm>(result);
     }
 
-    /*** To Do: Add more test date in InlineData ***/
+    /*** To Do: Add more test data in InlineData ***/
     [Theory]
     [InlineData("", "")]
     [InlineData("Karin", "")]
