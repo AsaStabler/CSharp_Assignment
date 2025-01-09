@@ -4,6 +4,6 @@ namespace Business.Interfaces;
 
 public interface IContactRepository
 {
-    List<Contact>? GetContacts();
+    List<Contact> GetContacts();
     bool SaveContacts(List<Contact> contacts);
 }

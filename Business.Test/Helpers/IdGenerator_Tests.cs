@@ -7,10 +7,10 @@ public class IdGenerator_Tests
     [Fact]
     public void GenerateUniqueId_ShouldReturnStringOfTypeGuid()
     {
-        //act
-        string id = IdGenerator.GenerateUniqueId();
+        // Act
+        var id = IdGenerator.GenerateUniqueId();
 
-        //assert
+        // Assert
         Assert.False(string.IsNullOrEmpty(id));
         Assert.True(Guid.TryParse(id, out _));
     }

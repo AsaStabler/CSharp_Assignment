@@ -1,6 +1,7 @@
 ﻿using Business.Interfaces;
 using Business.Models;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 
 namespace Business.Repositories;
@@ -9,7 +10,6 @@ public class ContactRepository(IFileService fileService) : IContactRepository
 {
     private readonly IFileService _fileService = fileService;
 
-    //Method saves the whole contact list, i.e. contacts, to file
     public bool SaveContacts(List<Contact> contacts)
     {
         try
@@ -25,14 +25,17 @@ public class ContactRepository(IFileService fileService) : IContactRepository
         }
     }
 
-    //Method reads the whole contact list, i.e. contacts, from file
-    public List<Contact>? GetContacts()
+    public List<Contact> GetContacts()
     {
         try
         {
             var json = _fileService.GetContentFromFile();
             var contacts = JsonSerializer.Deserialize<List<Contact>>(json);
-            return contacts;
+
+            if (contacts != null) 
+                return contacts;
+            else
+                return [];
         }
         catch (Exception ex)
         {

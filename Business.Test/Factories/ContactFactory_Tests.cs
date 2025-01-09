@@ -9,31 +9,28 @@ public class ContactFactory_Tests
     [Fact]
     public void Create_ShouldReturnContactRegistrationForm()
     {
-        // Arrange
-        ContactRegistrationForm contactRegistrationForm = new();
-
         // Act
-        ContactRegistrationForm result = ContactFactory.Create();
+        var result = ContactFactory.Create();
 
         // Assert
         Assert.NotNull(result);
         Assert.IsType<ContactRegistrationForm>(result);
     }
 
-    /*** To Do: Add more test data in InlineData ***/
     [Theory]
-    [InlineData("", "")]
-    [InlineData("Karin", "")]
-    [InlineData("", "Wallin")]
-    [InlineData("Karin", "Wallin")]
-    public void Create_ShouldReturnContact_WhenContactRegistrationFormIsSupplied(string firstName, string lastName)
+    [InlineData("", "", "", "", "", "", "")]
+    [InlineData("Donald", "Duck", "", "", "", "123 45", "Örebro")]
+    [InlineData("", "Wallin", "", "076-2345 78", "", "", "")]
+    [InlineData("Karin", "Wallin", "karin.wallin@domain.com", "073 4567 89", "Torsgatan 1", "444 55", "Vallentuna")]
+    public void Create_ShouldReturnContact_WhenContactRegistrationFormIsSupplied(string firstName, string lastName, string email,
+                                                              string phone, string streetAddress, string postalCode, string city)
     {
         // Arrange
-        //ContactRegistrationForm contactRegistrationForm = new() { FirstName = "Karin", LastName = "Wallin" };
-        ContactRegistrationForm contactRegistrationForm = new() { FirstName = firstName, LastName = lastName };
+        ContactRegistrationForm contactRegistrationForm = new() { FirstName = firstName, LastName = lastName, Email = email,
+                                         Phone = phone, StreetAddress = streetAddress, PostalCode = postalCode, City = city};
 
         // Act
-        Contact result = ContactFactory.Create(contactRegistrationForm);
+        var result = ContactFactory.Create(contactRegistrationForm);
 
         // Assert
         Assert.NotNull(result);
@@ -46,5 +43,4 @@ public class ContactFactory_Tests
         Assert.Equal(contactRegistrationForm.PostalCode, result.PostalCode);
         Assert.Equal(contactRegistrationForm.City, result.City);
     }
-
 }

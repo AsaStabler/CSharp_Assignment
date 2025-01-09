@@ -6,19 +6,10 @@ using System.Diagnostics;
 
 namespace Business.Services;
 
-public class ContactService : IContactService
+public class ContactService(IContactRepository contactRepository) : IContactService
 {
-    private readonly IContactRepository _contactRepository;
+    private readonly IContactRepository _contactRepository = contactRepository;
     private List<Contact> _contacts = [];
-
-    //Constructor, where list of contacts is populated from contactlist.json (at startup of application)
-    public ContactService(IContactRepository contactRepository)
-    {
-        _contactRepository = contactRepository;
-
-        // To Do: try - catch? 
-        _contacts = _contactRepository.GetContacts()!;
-    }
 
     public bool CreateContact(ContactRegistrationForm contactRegistrationForm)
     {
@@ -28,8 +19,7 @@ public class ContactService : IContactService
 
             _contacts.Add(contact);
 
-            var result = _contactRepository.SaveContacts(_contacts);
-            return result;
+            return _contactRepository.SaveContacts(_contacts);
         }
         catch (Exception ex)
         {
@@ -52,32 +42,74 @@ public class ContactService : IContactService
         }
     }
     
-
-    /* TO DO: Snygga till hantering av successmeddelanden och errormeddelanden, impl. try-catch */
     public Contact? GetContactById(string id)
     {
-        //Not necessary to read in to _contacts - file is read at startup of application
-        Contact contact = _contacts.FirstOrDefault(x => x.Id == id)!;
-        //if (contact != null)
+        try
+        { 
+            Contact contact = _contacts.FirstOrDefault(x => x.Id == id)!;
             return contact;
-
-        //throw new KeyNotFoundException($"Contact with id {id} was not found.");
+        }
+        catch (Exception ex)
+        {
+            /*** TO DO: Ska ändra här... ***/
+            //throw new KeyNotFoundException($"Contact with id {id} was not found.");
+            Debug.WriteLine(ex.Message);
+            return null;
+        }
     }
 
-    /* TO DO: Snygga till hantering av successmeddelanden och errormeddelanden, impl. try-catch */
+    public bool UpdateContact(Contact contact)
+    // Contact or ContactRegistrationForm here?
+    // If use ContactRegistrationForm, then also provide Id
+    {
+        try
+        {
+            int index = _contacts.FindIndex(x => x.Id == contact.Id);
+
+            if (index > -1)
+            {
+                _contacts[index].FirstName = contact.FirstName;
+                _contacts[index].LastName = contact.LastName;
+                _contacts[index].Email = contact.Email;
+                _contacts[index].Phone = contact.Phone;
+                _contacts[index].StreetAddress = contact.StreetAddress;
+                _contacts[index].PostalCode = contact.PostalCode;
+                _contacts[index].City = contact.City;
+
+                return _contactRepository.SaveContacts(_contacts);
+            }
+            else
+                return false;
+
+        }
+        catch (Exception ex)
+        {
+            /*** TO DO: Ska ändra här... ***/
+            //throw new KeyNotFoundException($"Contact with id {id} was not found.");
+            Debug.WriteLine(ex.Message);
+            return false;
+        }
+    }
+
     public bool DeleteContact(Contact contact)
     {
-        //Not necessary to read in to _contacts, since file is read at startup of application
-        
-        //Remove contact from the list of contacts, i.e. _contacts
-        var result = _contacts.Remove(contact);
-
-        //Save the updated list to file
-        if (result)
-        { 
-            result = _contactRepository.SaveContacts(_contacts);
-            return result;
+        try
+        {
+            //Remove contact from the list of contacts, i.e. _contacts
+            var result = _contacts.Remove(contact);
+            
+            //Save the updated list to file
+            if (result)
+            {
+                result = _contactRepository.SaveContacts(_contacts);
+                return result;
+            }
+            return false;
         }
-        return false;
+        catch (Exception ex)
+        {
+            Debug.WriteLine(ex.Message);
+            return false;
+        }
     }
 }

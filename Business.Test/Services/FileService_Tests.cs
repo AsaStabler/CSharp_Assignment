@@ -1,4 +1,5 @@
 ﻿using Business.Interfaces;
+using Business.Services;
 using Moq;
 
 namespace Business.Test.Services;
@@ -13,6 +14,58 @@ public class FileService_Tests
         _fileServiceMock = new Mock<IFileService>();
         _fileService = _fileServiceMock.Object;
     }
+
+    [Fact]
+    public void SaveContentToFile_ShouldSaveContentToAFile()
+    {
+        // Arrange
+        var content = "test";
+        var fileName = $"{Guid.NewGuid()}.json";
+        IFileService fileService = new FileService("Data", fileName);
+
+        try
+        {
+            // Act
+            var result = fileService.SaveContentToFile(content);
+
+            // Assert
+            Assert.True(result);
+        }
+        finally
+        {
+            var filePath = Path.Combine("Data", fileName);
+            if (File.Exists(filePath))
+                File.Delete(filePath);
+        }
+    }
+
+    [Fact]
+    public void GetContentFromFile_ShouldReturnContentFromFile()
+    {
+        // Arrange
+        var content = "test";
+        var fileName = $"{Guid.NewGuid()}.json";
+        //File.WriteAllText(fileName, content); 
+
+        IFileService fileService = new FileService("Data", fileName);
+        fileService.SaveContentToFile(content);
+
+        try
+        {
+            // Act
+            var result = fileService.GetContentFromFile();
+
+            // Assert
+            Assert.Equal(content, result);
+        }
+        finally
+        {
+            var filePath = Path.Combine("Data", fileName);
+            if (File.Exists(filePath))
+                File.Delete(filePath);
+        }
+    }
+
 
     [Fact]
     public void SaveContentToFile_ShouldReturnTrue()
