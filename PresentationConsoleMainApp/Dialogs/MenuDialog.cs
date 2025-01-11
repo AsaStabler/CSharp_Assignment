@@ -139,13 +139,6 @@ public class MenuDialog(IContactService contactService)
         if (contact != null)
         { 
             ShowContact(contact);
-            contact.FirstName = "TestarUpdate";
-            var result = _contactService.UpdateContact(contact);
-            if (result)
-                Console.WriteLine("Update went well.");
-            else
-                Console.WriteLine("Update was not successful.");
-            //Console.ReadKey();
         }
         else
             Console.WriteLine($" No contact with id: ({Id}) could be found.");

@@ -6,22 +6,74 @@
              
              xmlns:local="clr-namespace:PresentationWPFMainApp.Views"
              xmlns:viewmodels="clr-namespace:PresentationWPFMainApp.ViewModels"
+             xmlns:models="clr-namespace:Business.Models;assembly=Business"
              d:DataContext="{d:DesignInstance Type=viewmodels:ContactsViewModel}"
              
              mc:Ignorable="d" 
              Background="White"
-             d:DesignHeight="450" d:DesignWidth="300">
+             d:DesignHeight="600" d:DesignWidth="350">
     <Grid Margin="15">
         <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <StackPanel>
-            <TextBlock Text="{Binding Title}" />
-        </StackPanel>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="auto" />
+            </Grid.ColumnDefinitions>
 
-        <Button Grid.Row="1" Padding="8" Content="Add New Contact" Command="{Binding GoToAddContactCommand}" />
+            <TextBlock Grid.Column="0" Text="Contact List" FontSize="20" FontWeight="Bold" />
+            <Button Grid.Column="1" Command="{Binding GoToAddContactCommand}"  Content="&#xE710;" FontFamily="Segoe MDL2 Assets" Padding="7 0" />
+         </Grid>
 
+        <ListView Grid.Row="1" ItemsSource="{Binding Contacts}" Margin="0 20 0 0" HorizontalContentAlignment="Stretch" >
+            <ListView.ItemTemplate>
+                <DataTemplate DataType="models:Contact">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0">
+                            <TextBlock>
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="{}{0} {1}">
+                                        <Binding Path="FirstName" />
+                                        <Binding Path="LastName" />
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                            <TextBlock Text="{Binding Email}" FontSize="10" />
+                            <TextBlock Text="{Binding Phone}" FontSize="10" />
+                            <!--TextBlock FontSize="10">
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="{}{0}, {1}">
+                                        <Binding Path="Email" />
+                                        <Binding Path="Phone" />
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock-->
+                            <TextBlock Text="{Binding StreetAddress}" FontSize="10" />
+                            <TextBlock FontSize="10">
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="{}{0} {1}">
+                                        <Binding Path="PostalCode" />
+                                        <Binding Path="City" />
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                            <TextBlock Text="______________________________________________________"  FontSize="10"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1"  Orientation="Horizontal">
+                            <Button CommandParameter="{Binding .}" Command="{Binding DataContext.GoToDetailsContactCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"  Content="&#xE712;" FontFamily="Segoe MDL2 Assets"  Margin="0 0 0 55" Padding="7 0" Background="Transparent" />
+                        </StackPanel>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </UserControl>

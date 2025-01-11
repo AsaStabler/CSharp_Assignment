@@ -1,27 +1,26 @@
-﻿using Business.Dtos;
-using Business.Interfaces;
+﻿using Business.Interfaces;
+using Business.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace PresentationWPFMainApp.ViewModels;
 
-public partial class AddContactViewModel(IServiceProvider serviceProvider, IContactService contactService) : ObservableObject
+public partial class EditContactViewModel(IServiceProvider serviceProvider, IContactService contactService) : ObservableObject
 {
-    
     private readonly IServiceProvider _serviceProvider = serviceProvider;
     private readonly IContactService _contactService = contactService;
 
     [ObservableProperty]
-    private ContactRegistrationForm _contact = new();
+    private Contact _contact = new();
 
     [RelayCommand]
-    private void Save()
+    private void Update()
     {
-        // Saves a new Contact to file
-        var result = _contactService.CreateContact(Contact);
+        // Updates an existing Contact to file
+        var result = _contactService.UpdateContact(Contact);
         if (result)
-        { 
+        {
             var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
             mainViewModel.CurrentViewModel = _serviceProvider.GetRequiredService<ContactsViewModel>();
         }

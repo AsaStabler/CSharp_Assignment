@@ -1,15 +1,28 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using Business.Interfaces;
+using Business.Models;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.DependencyInjection;
+using System.Collections.ObjectModel;
 
 namespace PresentationWPFMainApp.ViewModels;
 
-public partial class ContactsViewModel: ObservableObject
+public partial class ContactsViewModel : ObservableObject
 {
     private readonly IServiceProvider _serviceProvider;
+    private readonly IContactService _contactService;
 
     [ObservableProperty]
-    private string _title = "Contacts";
+    private ObservableCollection<Contact> _contacts = [];
+
+    public ContactsViewModel(IServiceProvider serviceProvider, IContactService contactService)
+    {
+        _serviceProvider = serviceProvider;
+        _contactService = contactService;
+
+        //Populates the Contact list from file
+        _contacts = new ObservableCollection<Contact>(_contactService.GetAllContacts());
+    }
 
     [RelayCommand]
     private void GoToAddContact()
@@ -18,8 +31,13 @@ public partial class ContactsViewModel: ObservableObject
         mainViewModel.CurrentViewModel = _serviceProvider.GetRequiredService<AddContactViewModel>();
     }
 
-    public ContactsViewModel(IServiceProvider serviceProvider)
+    [RelayCommand]
+    private void GoToDetailsContact(Contact contact)
     {
-        _serviceProvider = serviceProvider;
+        var detailsContactViewModel = _serviceProvider.GetRequiredService<DetailsContactViewModel>();
+        detailsContactViewModel.Contact = contact;
+
+        var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
+        mainViewModel.CurrentViewModel = detailsContactViewModel;
     }
 }
