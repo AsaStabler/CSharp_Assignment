@@ -14,7 +14,6 @@ public class MenuDialog(IContactService contactService)
 
         var isRunning = true;
 
-        //while (true)
         do
         {
             Console.Clear();
@@ -61,7 +60,6 @@ public class MenuDialog(IContactService contactService)
                     OutputDialog(" Invalid option. Please try again.");
                     break;
             }
-     // }
         } while (isRunning);
     }
 
@@ -161,7 +159,6 @@ public class MenuDialog(IContactService contactService)
 
         if (contact != null)
         {
-            //Console.WriteLine($" Name: {contact.FirstName} {contact.LastName}  ({contact.Id})");
             var result = _contactService.DeleteContact(contact);
             if (result)
                 Console.WriteLine(" Contact was deleted successfully.");

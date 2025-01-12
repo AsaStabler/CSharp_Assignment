@@ -13,6 +13,9 @@ public partial class ContactsViewModel : ObservableObject
     private readonly IContactService _contactService;
 
     [ObservableProperty]
+    private string headline = "Contact List";
+
+    [ObservableProperty]
     private ObservableCollection<Contact> _contacts = [];
 
     public ContactsViewModel(IServiceProvider serviceProvider, IContactService contactService)

@@ -12,6 +12,9 @@ public partial class DetailsContactViewModel(IServiceProvider serviceProvider, I
     private readonly IContactService _contactService = contactService;
 
     [ObservableProperty]
+    private string headline = "Contact Details";
+
+    [ObservableProperty]
     private Contact _contact = new();
 
     [RelayCommand]

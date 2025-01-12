@@ -26,6 +26,9 @@ public partial class App : Application
                 services.AddSingleton<MainViewModel>();
                 services.AddSingleton<MainWindow>();
 
+                services.AddTransient<GetStartedViewModel>();
+                services.AddTransient<GetStartedView>();
+
                 services.AddTransient<ContactsViewModel>();
                 services.AddTransient<ContactsView>();
 
@@ -43,9 +46,6 @@ public partial class App : Application
 
     protected override void OnStartup(StartupEventArgs e)
     {
-        var mainViewModel = _host.Services.GetRequiredService<MainViewModel>();
-        mainViewModel.CurrentViewModel = _host.Services.GetRequiredService<ContactsViewModel>();
-
         var mainWindow = _host.Services.GetRequiredService<MainWindow>();
         mainWindow.Show();
     }

@@ -51,16 +51,12 @@ public class ContactService(IContactRepository contactRepository) : IContactServ
         }
         catch (Exception ex)
         {
-            /*** TO DO: Ska ändra här... ***/
-            //throw new KeyNotFoundException($"Contact with id {id} was not found.");
             Debug.WriteLine(ex.Message);
             return null;
         }
     }
 
     public bool UpdateContact(Contact contact)
-    // Contact or ContactRegistrationForm here?
-    // If use ContactRegistrationForm, then also provide Id
     {
         try
         {
@@ -84,8 +80,6 @@ public class ContactService(IContactRepository contactRepository) : IContactServ
         }
         catch (Exception ex)
         {
-            /*** TO DO: Ska ändra här... ***/
-            //throw new KeyNotFoundException($"Contact with id {id} was not found.");
             Debug.WriteLine(ex.Message);
             return false;
         }

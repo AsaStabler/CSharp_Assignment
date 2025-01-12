@@ -12,6 +12,9 @@ public partial class EditContactViewModel(IServiceProvider serviceProvider, ICon
     private readonly IContactService _contactService = contactService;
 
     [ObservableProperty]
+    private string headline = "Edit Contact";
+
+    [ObservableProperty]
     private Contact _contact = new();
 
     [RelayCommand]

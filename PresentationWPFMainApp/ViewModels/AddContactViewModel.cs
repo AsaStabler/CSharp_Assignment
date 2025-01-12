@@ -13,6 +13,9 @@ public partial class AddContactViewModel(IServiceProvider serviceProvider, ICont
     private readonly IContactService _contactService = contactService;
 
     [ObservableProperty]
+    private string headline = "New Contact";
+
+    [ObservableProperty]
     private ContactRegistrationForm _contact = new();
 
     [RelayCommand]

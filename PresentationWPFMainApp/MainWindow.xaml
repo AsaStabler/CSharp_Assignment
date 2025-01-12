@@ -8,30 +8,52 @@
         xmlns:views="clr-namespace:PresentationWPFMainApp.Views"
         xmlns:viewmodels="clr-namespace:PresentationWPFMainApp.ViewModels"
         d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
-        WindowStartupLocation="CenterScreen"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="350">
-    <Grid Margin="15">
-        <ContentControl Content="{Binding CurrentViewModel}">
-            <ContentControl.Resources>
-                
-                <DataTemplate DataType="{x:Type viewmodels:ContactsViewModel}">
-                    <views:ContactsView/>
-                </DataTemplate>
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        Background="Transparent"
+        AllowsTransparency="True"
+        Title="Contacts Application" Height="770" Width="400">
 
-                <DataTemplate DataType="{x:Type viewmodels:AddContactViewModel}">
-                    <views:AddContactView/>
-                </DataTemplate>
+    <Border Background="CadetBlue" CornerRadius="25">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="70"/>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
 
-                <DataTemplate DataType="{x:Type viewmodels:DetailsContactViewModel}">
-                    <views:DetailsContactView/>
-                </DataTemplate>
+            <Grid x:Name="TopBar" Grid.Row="0" Background="Transparent" MouseDown="TopBar_MouseDown">
+                <Button
+                    Click="ExitButton_Click"
+                    Style="{StaticResource ExitButton}"
+                 />
+            </Grid>
 
-                <DataTemplate DataType="{x:Type viewmodels:EditContactViewModel}">
-                    <views:EditContactView/>
-                </DataTemplate>
+            <ContentControl Grid.Row="1" Content="{Binding CurrentViewModel}">
+                <ContentControl.Resources>
 
-            </ContentControl.Resources>
-        </ContentControl>
-    </Grid>
+                    <DataTemplate DataType="{x:Type viewmodels:GetStartedViewModel}">
+                        <views:GetStartedView/>
+                    </DataTemplate>
+
+                    <DataTemplate DataType="{x:Type viewmodels:ContactsViewModel}">
+                        <views:ContactsView/>
+                    </DataTemplate>
+
+                    <DataTemplate DataType="{x:Type viewmodels:AddContactViewModel}">
+                        <views:AddContactView/>
+                    </DataTemplate>
+
+                    <DataTemplate DataType="{x:Type viewmodels:DetailsContactViewModel}">
+                        <views:DetailsContactView/>
+                    </DataTemplate>
+
+                    <DataTemplate DataType="{x:Type viewmodels:EditContactViewModel}">
+                        <views:EditContactView/>
+                    </DataTemplate>
+
+                </ContentControl.Resources>
+            </ContentControl>
+        </Grid>
+    </Border>
 </Window>
